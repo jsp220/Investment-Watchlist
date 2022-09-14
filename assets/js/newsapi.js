@@ -45,7 +45,7 @@ function getGoogleNews() {
 /*
     CRYPTO News API.
 */
-function getCryptoNews() {
+function getCryptoNews(searchFor) {
 
     const options = {
         method: 'GET',
@@ -54,6 +54,13 @@ function getCryptoNews() {
             'X-RapidAPI-Host': 'crypto-news-live3.p.rapidapi.com'
         }
     };
+
+    // Crypto News Object for results.
+    var objCrypto = {
+        source: "", 
+        title: "",
+        url: ""
+    }[0];
 
 
     // ---------------------------------------------------------
@@ -66,13 +73,26 @@ function getCryptoNews() {
     }).then(function(data){
 
         console.log(data.length);
-        for (let x = 0; x < data.length; x++) {
-            if (data[x].title.search("Apple")) {
-                console.log(data[x].title);
+        var index = 0;
+        var sFind = searchFor.toUpperCase();
+        var objResult = {
+            source: "", 
+            title: "",
+            url: ""
+        };
+    
+        for (let x = 0; x < data.length; x++) {            
+            if (data[x].title.toUpperCase().search(sFind) > 0) {
+                objResult.title   = data[x].title;
+                objResult.source  = data[x].source;
+                objResult.url     = data[x].url; 
+                objCrypto.push(objResult);
             }
         }
+        console.log("index: " + index);
 
     }).catch(err => console.error(err));
 
+    return (objCrypto);
 
 }
