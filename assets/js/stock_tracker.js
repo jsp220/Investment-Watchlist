@@ -1,5 +1,6 @@
 const encodedParams = new URLSearchParams();
-encodedParams.append("symbol", "AAPL");
+const input = "AAPL"
+encodedParams.append("symbol", `${input}`);
 
 const options = {
 	method: 'POST',
@@ -18,10 +19,12 @@ fetch('https://yahoo-finance97.p.rapidapi.com/stock-info', options)
         var current = response.data.currentPrice;
         var different = response.data.open - response.data.currentPrice;
         var marketCap = response.data.marketCap;
+        var stockName = input
     
         console.log("Current Price: " + current);
         console.log("Diffrenet: " + different);
         console.log("Market Cap: " + marketCap);
+        console.log("Stock Name: " + stockName);
 
     })
 	.catch(err => console.error(err));
