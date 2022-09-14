@@ -90,6 +90,7 @@ async function search (cryptoSearchTerm) {
 
 // })
 
+
 init();
 var cryptoSearchTerm = "ADA";
 search(cryptoSearchTerm);
