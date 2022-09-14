@@ -1,3 +1,16 @@
+/*
+    Created:    09/14/2022 
+    Programmer: Brian Zoulko
+    Notes:      Created this module to call and gather news detail
+                for Project#1 - Investment-Watchlist.
+
+    Modification
+    ============
+    09/14/2022 Brian Zoulko    Created news api call module as a function.
+*/
+
+const cNEWS_URL = "";
+
 function getNews(strKey) {
 
     // --------------------------------------------------------------------------
