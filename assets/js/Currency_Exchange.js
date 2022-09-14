@@ -23,20 +23,20 @@ request.onload = function() {
   var NOK = response.rates.NOK
   var MXN = response.rates.MXN
 
-  console.log(USD);
-  console.log(EUR);
-  console.log(JPY);
-  console.log(GBP);
-  console.log(AUD);
-  console.log(CAD);
-  console.log(CHF);
-  console.log(CNY);
-  console.log(HKD);
-  console.log(NZD);
-  console.log(SEK);
-  console.log(KRW);
-  console.log(SDG);
-  console.log(NOK);
-  console.log(MXN);
+  console.log("USD:USD: " + USD);
+  console.log("USD:EUR: " + EUR);
+  console.log("USD:JPY: " + JPY);
+  console.log("USD:GBP: " + GBP);
+  console.log("USD:AUD: " + AUD);
+  console.log("USD:CAD: " + CAD);
+  console.log("USD:CHF: " + CHF);
+  console.log("USD:CNY: " + CNY);
+  console.log("USD:HKD: " + HKD);
+  console.log("USD:NZD: " + NZD);
+  console.log("USD:SEK: " + SEK);
+  console.log("USD:KRW: " + KRW);
+  console.log("USD:SDG: " + SDG);
+  console.log("USD:NOK: " + NOK);
+  console.log("USD:MXN: " + MXN);
 
 }
