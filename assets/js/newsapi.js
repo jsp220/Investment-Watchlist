@@ -148,33 +148,41 @@ function getCryptoNews(searchFor) {
 
         // Initialize variables for pulling news detail.
         var sFind = searchFor.toUpperCase();
-        var objResult = {
-            source: "", 
-            title: "",
-            url: ""
-        };
 
-        // Remove empty object created initially.
+        // Remove the empty object created when initializing the object.
         objCrypto.pop(objResult);
 
         // Load news titles that contains matching text from
         // the "searchFor" parameter.
         for (let x = 0; x < data.length; x++) {            
             if (data[x].title.toUpperCase().search(sFind) > 0) {
-                objResult.title   = data[x].title;
-                objResult.source  = data[x].source;
-                objResult.url     = data[x].url;
+                var objResult = {
+                    source: data[x].title, 
+                    title: data[x].source,
+                    url: data[x].url
+                };
+
+                // // Display what was found to the console.
+                // console.log("Index: " + x);
+                // console.log("Source: " + objResult.source);
+                // console.log("Title: " + objResult.title);
+                // console.log("URL: " + objResult.url);
+                // console.log("");
+
                 objCrypto.push(objResult);
                 bFoundNews = true;
             }
         }
 
+        console.log(objCrypto);
+
         // Dump found detail to console.
         console.log("Items found: " + objCrypto.length);
         for (let i = 0; i < objCrypto.length; i++) {
-            console.log("Item[" + i + "]: " + objCrypto[i].source);
-            console.log("Item[" + i + "]: " + objCrypto[i].title);
-            console.log("Item[" + i + "]: " + objCrypto[i].url);
+            console.log("objCrypto[" + i + "].source: " + objCrypto[i].source);
+            console.log("objCrypto[" + i + "].title: " + objCrypto[i].title);
+            console.log("objCrypto[" + i + "].url: " + objCrypto[i].url);
+            console.log("");
         }
 
     }).catch(err => console.error(err));
