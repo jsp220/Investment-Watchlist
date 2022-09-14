@@ -73,7 +73,7 @@ function getCryptoNews(searchFor) {
     }).then(function(data){
 
         console.log(data.length);
-        var index = 0;
+        var index = -1;
         var sFind = searchFor.toUpperCase();
         var objResult = {
             source: "", 
@@ -85,8 +85,8 @@ function getCryptoNews(searchFor) {
             if (data[x].title.toUpperCase().search(sFind) > 0) {
                 objResult.title   = data[x].title;
                 objResult.source  = data[x].source;
-                objResult.url     = data[x].url; 
-                objCrypto.push(objResult);
+                objResult.url     = data[x].url;
+                index++;
             }
         }
         console.log("index: " + index);
