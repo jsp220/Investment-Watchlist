@@ -87,14 +87,16 @@ async function searchTermToId(term) {
 
 init();
 
-$("#search-term").keypress(function (a) {
-    var key = a.which;
-    if (key == 13) {
-        $("#add").click();
-    }
-})
+// $("#search-term").keypress(function (a) {
+//     var key = a.which;
+//     if (key == 13) {
+//         $("#add").click();
+//     }
+// })
 
-$("#add").on("click", async function() {
+$("#add").on("click", async function(event) {
+    event.preventDefault();
+
     var cryptoSearchTerm = $(this).siblings("#search-term").val();
     
     if (!cryptoSearchTerm) {
