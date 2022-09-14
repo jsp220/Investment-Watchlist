@@ -174,16 +174,14 @@ function getCryptoNews(searchFor) {
             }
         }
 
-        console.log(objCrypto);
-
-        // Dump found detail to console.
-        console.log("Items found: " + objCrypto.length);
-        for (let i = 0; i < objCrypto.length; i++) {
-            console.log("objCrypto[" + i + "].source: " + objCrypto[i].source);
-            console.log("objCrypto[" + i + "].title: " + objCrypto[i].title);
-            console.log("objCrypto[" + i + "].url: " + objCrypto[i].url);
-            console.log("");
-        }
+        // // Dump found detail to console.
+        // console.log("Items found: " + objCrypto.length);
+        // for (let i = 0; i < objCrypto.length; i++) {
+        //     console.log("objCrypto[" + i + "].source: " + objCrypto[i].source);
+        //     console.log("objCrypto[" + i + "].title: " + objCrypto[i].title);
+        //     console.log("objCrypto[" + i + "].url: " + objCrypto[i].url);
+        //     console.log("");
+        // }
 
     }).catch(err => console.error(err));
 
