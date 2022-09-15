@@ -15,11 +15,6 @@ function DarkMode() {
  }
 
 
-
-
-
-
-
 //  Crypto API
 
 // for testing init
@@ -126,7 +121,26 @@ $("#add").on("click", async function(event) {
     favCrypto.push(cryptoId);
     localStorage.setItem("cryptoList", JSON.stringify(favCrypto));
 
-    // 09/15/2022 BZ - Aded call for crypto news.
+    
+    // 09/15/2022 BZ - Aded call for crypto news (source, title, url).
+    console.log("searchFor: " + cryptoSearchTerm);
+    var objCrypto = await getCryptoNews(cryptoSearchTerm);
+
+    // Dump found detail to console.
+    console.log("Items found: " + objCrypto.length);
+    for (let i = 0; i < objCrypto.length; i++) {
+        console.log("objCrypto[" + i + "].source: " + objCrypto[i].source);
+        console.log("objCrypto[" + i + "].title: " + objCrypto[i].title);
+        console.log("objCrypto[" + i + "].url: " + objCrypto[i].url);
+        console.log("");
+
+        $(".crypto-news").append($(`<div>`).text(objCrypto[i].source));
+
+    }        
+
+    // for (let x = 0; x < objCrypto.length; x++) {
+    // }
+    // console.log("objCrypto.length: " + objCrypto.length);
 
 });
 
