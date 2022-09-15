@@ -22,6 +22,10 @@ body {
   background-color:#212121;
 }
 
+.dark-mode .collection-item {
+  background-color:#212121
+}
+
 .dark-mode header.col-12.center.test {
   background-color:#212121 ;
 }
@@ -48,6 +52,26 @@ header.col-12.center.test {
 
 .right-box {
   margin-left: 0.5%;
+}
+
+.list-item {
+  align-items: center;
+}
+
+.bold {
+  font-weight: bolder;
+}
+
+.red-font {
+  color: red;
+}
+
+.green-font {
+  color: green;
+}
+
+.row:after {
+  display:none;
 }
 
 /* .rightBox {
