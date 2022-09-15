@@ -4,11 +4,6 @@ function DarkMode() {
  }
 
 
-
-
-
-
-
 //  Crypto API
 
 // for testing init
@@ -46,14 +41,14 @@ async function cryptoApi(cryptoId) {
 }
 
 function appendFave (data) {
-    var divEl = $("<div class='test'>");
+    var divEl = $("<div class='row collection-item'>");
     var symb = data.symbol;
     var symb = symb.toUpperCase();
     var price = data.market_data.current_price.usd;
     var priceChg = data.market_data.price_change_24h;
     var priceChg = priceChg.toFixed(2);
     var priceChgPcnt = (priceChg/price*100).toFixed(2);
-    divEl.text(`${symb} $${price} $${priceChg} (${priceChgPcnt}%)`);
+    divEl.text(`${symb} $${price.toLocaleString("en-US")} $${priceChg} (${priceChgPcnt}%)`);
     $(".fav-list").append(divEl);
 }
 
