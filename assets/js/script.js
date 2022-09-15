@@ -18,7 +18,6 @@ function init() {
         favCrypto = JSON.parse(favCryp);
         favCrypto.splice(10); // limit to 10 crypto?
     }
-    // console.log(favCrypto);
     favCryptoApi(favCrypto);
 
 }
@@ -51,23 +50,34 @@ function appendFave (data) {
     var sym = sym.toUpperCase();
     var price = data.market_data.current_price.usd;
     var priceChg = data.market_data.price_change_24h;
-    var priceChgPcnt = (priceChg/price*100).toFixed(2);
+    if (!priceChg) {
+        priceChg = "0.00";
+    } else if (Math.abs(priceChg) < 0.01) {
+        priceChg = priceChg.toPrecision(2);
+    } else {
+        priceChg = priceChg.toFixed(2);
+    }
+
+    if (!price) {
+        priceChgPcnt = "0.00";
+        price = "0.00";
+    } else {
+        var priceChgPcnt = (priceChg/price*100).toFixed(2);
+    }
 
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
     });
-      
-    formatter.format(price);
-
-    if (Math.abs(priceChg) < 0.01) {
-        priceChg = priceChg.toPrecision(2);
+    
+    if (price >= 0.01 || price < 0.00001) {
+        price = formatter.format(price);
     } else {
-        priceChg = priceChg.toFixed(2);
+        price = "$" + price;
     }
     
     symEl.text(sym);
-    priceEl.text(`$${price}`);
+    priceEl.text(`${price}`);
     priceChgEl.text(`$${priceChg} (${priceChgPcnt}%)`);
     if (priceChg < 0) {
         priceChgEl.addClass("red-font");
@@ -81,7 +91,6 @@ function appendFave (data) {
     $(".remove").on("click", function() {
         var remId = $(this).parent().attr("id");
         
-        console.log(favCrypto);
         for (i in favCrypto) {
             if (remId === favCrypto[i]) {
                 favCrypto.splice(i, 1);
@@ -99,10 +108,10 @@ async function searchTermToId(term) {
             return response.json();
         })
     term = term.toLowerCase();
+    var cryptoId = 0;
     for (i in data) {
         if (term == data[i].id || term == data[i].name || term == data[i].symbol) {
             cryptoId = data[i].id;
-            console.log(cryptoId);
             break;
         }
     }
@@ -142,6 +151,11 @@ $("#add").on("click", async function(event) {
     }
     
     var cryptoId = await searchTermToId(cryptoSearchTerm);
+
+    if (!cryptoId) {
+        return;
+    }
+
     var data = await cryptoApi(cryptoId);
     appendFave(data);
     var favCryp = localStorage.getItem("cryptoList");
