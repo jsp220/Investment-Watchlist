@@ -1,45 +1,82 @@
 body {
-  padding: 25px;
+  padding: 2%;
   background-color: #e0e0e0;
   color: black;
-  font-size: 25px;
+  font-size: 1.2em;
 }
 .row {
-  margin-left: auto !important;
+  /* margin: auto !important; */
+  display: flex;
+  justify-content: space-between;
 }
+
 .dark-mode {
   background-color: #121212;
   color: #03DAC5;
 }
+.dark-mode div.col.s2,
+.dark-mode div.col.s3,
+.dark-mode div.col.s4,
+.dark-mode div.col.s8,
 .dark-mode div.col.s9 {
   background-color:#212121;
 }
-.dark-mode div.col.s2 {
-  background-color:#212121 ;
+
+.dark-mode .collection-item {
+  background-color:#212121
 }
+
 .dark-mode header.col-12.center.test {
   background-color:#212121 ;
 }
+
+div.col.s2,
+div.col.s3,
+div.col.s4,
+div.col.s8,
 div.col.s9 { 
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 1px 2px #121212;
 }
 
-div.col.s2{
+header.col-12.center.test {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 1px 2px #121212;
 }
 
-header.col-12.center.test{
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 1px 2px #121212;
+.left-box {
+  margin-right: 0.5%;
 }
 
-.rightBox {
+.right-box {
+  margin-left: 0.5%;
+}
+
+.list-item {
+  align-items: center;
+}
+
+.bold {
+  font-weight: bolder;
+}
+
+.red-font {
+  color: red;
+}
+
+.green-font {
+  color: green;
+}
+
+.row:after {
+  display:none;
+}
+
+/* .rightBox {
   margin-right: 2%;
+<<<<<<< HEAD
 }
 
 /* 09/15/2022 BZ - Added news api detail font sizes. */
@@ -49,3 +86,6 @@ header.col-12.center.test{
   margin-left: 18px;
   margin-bottom: 15px;
 }
+=======
+} */
+>>>>>>> main
