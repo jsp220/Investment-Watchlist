@@ -70,14 +70,13 @@ header.col-12.center.test {
   color: green;
 }
 
-/* .row:after {
+.row:after {
   display:none;
-} */
+}
 
 /* .rightBox {
   margin-right: 2%;
-<<<<<<< HEAD
-}
+} */
 
 /* 09/15/2022 BZ - Added news api detail font sizes. */
 .added-news-source {
@@ -86,6 +85,3 @@ header.col-12.center.test {
   margin-left: 18px;
   margin-bottom: 15px;
 }
-=======
-} */
->>>>>>> main
