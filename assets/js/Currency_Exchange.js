@@ -40,3 +40,5 @@ request.onload = function() {
   console.log("USD:MXN: " + MXN);
 
 }
+
+$('.dropdown-trigger').dropdown();
