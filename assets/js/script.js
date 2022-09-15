@@ -1,14 +1,3 @@
-/*
-    Created:    09/15/2022 
-    Programmer: Brian Zoulko, Joon Park, Ryan Dao, Qi Chen
-    Notes:      Module provides api calls and stores detail in local storage.
-
-    Modification
-    ============
-    09/15/2022 Brian Zoulko    Added newsapi.js to the Add function for the
-                               adding the crypto news to the html web page.
-*/
-
 function DarkMode() {
     var toggle = document.body;
     toggle.classList.toggle("dark-mode");
@@ -169,6 +158,15 @@ $("#add").on("click", async function(event) {
     // 09/15/2022 BZ - Created function to load news.
     loadNewsFor(cryptoSearchTerm);
 });
+
+// test search term
+// var cryptoSearchTerm = "ADA";
+// search(cryptoSearchTerm);
+
+// async function search (cryptoSearchTerm) {
+//     var cryptoId = await searchTermToId(cryptoSearchTerm);
+//     cryptoApi(cryptoId);
+// }
 
 
 /* **************************************************  
