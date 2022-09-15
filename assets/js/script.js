@@ -121,28 +121,35 @@ $("#add").on("click", async function(event) {
     favCrypto.push(cryptoId);
     localStorage.setItem("cryptoList", JSON.stringify(favCrypto));
 
-    
-    // 09/15/2022 BZ - Aded call for crypto news (source, title, url).
-    console.log("searchFor: " + cryptoSearchTerm);
-    var objCrypto = await getCryptoNews(cryptoSearchTerm);
-
-    // Dump found detail to console.
-    console.log("Items found: " + objCrypto.length);
-    for (let i = 0; i < objCrypto.length; i++) {
-        console.log("objCrypto[" + i + "].source: " + objCrypto[i].source);
-        console.log("objCrypto[" + i + "].title: " + objCrypto[i].title);
-        console.log("objCrypto[" + i + "].url: " + objCrypto[i].url);
-        console.log("");
-
-        $(".crypto-news").append($(`<div>`).text(objCrypto[i].source));
-
-    }        
-
-    // for (let x = 0; x < objCrypto.length; x++) {
-    // }
-    // console.log("objCrypto.length: " + objCrypto.length);
-
+    // 09/15/2022 BZ - Created function to load news.
+    loadNewsFor(cryptoSearchTerm);
 });
+
+
+/* **************************************************  
+    09/15/2022 BZ - Created for loading news.
+    Obtain news detail for requested search criteria.    
+***************************************************** */
+async function loadNewsFor(searchCriteria) {
+    var objCrypto = await getCryptoNews(searchCriteria);
+
+    var newsRow = $(".row");
+    newsRow.find('.new-detail').remove();
+
+    var newsDiv = $(`<div class="col s9 new-detail">`).text("News");
+
+    // Add Crypto News to the HTML page.
+    for (let i = 0; i < objCrypto.length; i++) {
+        var newsSource = $(`<li class='added-news-source'>`);
+        newsSource.text(objCrypto[i].source);
+        
+        //newsDiv.append($("<hr>"));
+        newsDiv.append(newsSource);
+        newsRow.append(newsDiv);
+    }
+
+}
+
 
 // test search term
 // var cryptoSearchTerm = "ADA";
