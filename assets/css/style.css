@@ -70,9 +70,9 @@ header.col-12.center.test {
   color: green;
 }
 
-.row:after {
+/* .row:after {
   display:none;
-}
+} */
 
 /* .rightBox {
   margin-right: 2%;

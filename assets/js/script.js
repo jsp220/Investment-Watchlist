@@ -172,8 +172,6 @@ $("#add").on("click", async function(event) {
     // 09/15/2022 BZ - Created function to load news.
     loadNewsFor(cryptoSearchTerm);
 =======
-    $(this).siblings("#search-term").val("");
-
 >>>>>>> main
 });
 
