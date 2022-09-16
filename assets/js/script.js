@@ -7,19 +7,20 @@ function DarkMode() {
 //  Crypto API
 
 // for testing init
-var favCrypto = [];
+var favCrypto;
 
 function init() {
     // Retrieve favorite assets data from local storage
     var favCryp = localStorage.getItem("cryptoList");
+    console.log(favCryp);
     if (!favCryp) {
-        favCrypto = [];
+        $(".crypto-list").attr("style", "display: none");
     } else {
+        $(".crypto-list").attr("style", "display: block");
         favCrypto = JSON.parse(favCryp);
         favCrypto.splice(10); // limit to 10 crypto?
+        favCryptoApi(favCrypto);
     }
-    favCryptoApi(favCrypto);
-
 }
 
 async function favCryptoApi(favCrypto) {
@@ -85,6 +86,7 @@ function appendFave (data) {
         priceChgEl.addClass("green-font");
     }
 
+    $(".crypto-list").attr("style", "display: block");
     divEl.append(symEl, priceEl, priceChgEl, delBtnEl);
     $(".fav-list").append(divEl);
 
@@ -98,6 +100,10 @@ function appendFave (data) {
         }
         localStorage.setItem("cryptoList", JSON.stringify(favCrypto));
 
+        if (favCrypto.length == 0) {
+            $(".crypto-list").attr("style", "display: none");
+            localStorage.clear();
+        }
         $(this).parent().remove();
     });
 }
@@ -115,8 +121,13 @@ async function searchTermToId(term) {
             break;
         }
     }
-    if (!cryptoId) {
-        console.log("Search term not found"); // replace with code that displays error message in a modal
+    if (!cryptoId) {       
+        $("#warning").show();
+        $("#warning").text("Search term not found.");
+
+        var timer = setInterval(function() {
+            $("#warning").fadeOut();
+        }, 2000);
         return;
     }
 
@@ -124,58 +135,52 @@ async function searchTermToId(term) {
 }
 
 
-
-
-// favCryptoApi();
-
-// search bar 
-
-// allows the user to hit enter key to search instead of clicking the search button
-
 init();
-
-// $("#search-term").keypress(function (a) {
-//     var key = a.which;
-//     if (key == 13) {
-//         $("#add").click();
-//     }
-// })
 
 $("#add").on("click", async function(event) {
     event.preventDefault();
 
-    var cryptoSearchTerm = $(this).siblings("#search-term").val();
+    var SearchTerm = $(this).siblings("#search-term").val();
     
-    if (!cryptoSearchTerm) {
+    if (!SearchTerm) {
+        $("#warning").show();
+        $("#warning").text("Please enter a search term.");
+
+        var timer = setInterval(function() {
+            $("#warning").fadeOut();
+        }, 2000);
+        return;
+    }
+
+    if ($("input:radio[name=asset-type]:checked").val() == "Crypto") {
+        var cryptoId = await searchTermToId(SearchTerm);
+
+        if (!cryptoId) {
+            $(this).siblings("#search-term").val("");
+            return;
+        }
+
+        var favCryp = localStorage.getItem("cryptoList");
+        if (!favCryp) {
+            favCrypto = [];
+        } else {
+            favCrypto = JSON.parse(favCryp);
+        }
+        
+        if (jQuery.inArray(cryptoId, favCrypto) == -1) {
+            favCrypto.push(cryptoId);
+            localStorage.setItem("cryptoList", JSON.stringify(favCrypto));
+
+            var data = await cryptoApi(cryptoId);
+            appendFave(data);   
+        }
+        $(this).siblings("#search-term").val("");
+        return;
+    } else if ($("input:radio[name=asset-type]:checked").val() == "Stock") {
+        
+        $(this).siblings("#search-term").val("");
         return;
     }
     
-    var cryptoId = await searchTermToId(cryptoSearchTerm);
-
-    if (!cryptoId) {
-        return;
-    }
-
-    var data = await cryptoApi(cryptoId);
-    appendFave(data);
-    var favCryp = localStorage.getItem("cryptoList");
-    if (!favCryp) {
-        favCrypto = [];
-    } else {
-        favCrypto = JSON.parse(favCryp);
-    }
-    favCrypto.push(cryptoId);
-    localStorage.setItem("cryptoList", JSON.stringify(favCrypto));
-
-    $(this).siblings("#search-term").val("");
-
 });
 
-// test search term
-// var cryptoSearchTerm = "ADA";
-// search(cryptoSearchTerm);
-
-// async function search (cryptoSearchTerm) {
-//     var cryptoId = await searchTermToId(cryptoSearchTerm);
-//     cryptoApi(cryptoId);
-// }
