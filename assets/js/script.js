@@ -207,10 +207,9 @@ $("#add").on("click", async function(event) {
 async function loadNewsFor(searchCriteria) {
     
     var objCrypto = await getCryptoNews(searchCriteria);
-    var newsDetail = $(".crypto-news"); // Reset text every time.
+    var newsDetail = $(".right-box"); // Reset text every time.
     var newDivArea = $('<div class="added-news-area">');
-    newsDetail.find('.added-news-items').remove();
-    newsDetail.append($("<hr>"));
+    newsDetail.find('.added-news-area').remove();
 
     // Add Crypto News to the HTML page.
     for (let i = 0; i < objCrypto.length; i++) {
