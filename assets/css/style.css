@@ -45,9 +45,27 @@ h1 {
 }
 
 .collection-item {
-  display:flex;
+  display: flex;
   justify-content: space-between;
 }
+
+/* .search-box {
+  padding: 0 2%;
+} */
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#search-term {
+  width: 60%;
+}
+
+#add {
+  width: 40%;
+}
+
 
 
 /* Dark mode colors */
