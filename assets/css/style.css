@@ -95,27 +95,22 @@ header.col-12.center.test {
   font-weight: 500;
 }
 
+/* 09/16/2022 BZ - Added title news caption font size. */
 .added-news-area {
-    /* background-color: rgb(246, 246, 240); */
     border:1px solid lightgrey;
-    /* Make Transparent */
-    /* 
-    opacity:0.5;
-    filter:alpha(opacity=40);
-    */
     margin-bottom: 15px;
     box-shadow: 0 3px 4px #121212;
 }
+
+/* 09/16/2022 BZ - Added title news icon settings. */
 #crypto-news-icon {
   margin-top: 20px;
-  display:inline;
+  margin-right: 10px;
   vertical-align:text-bottom;
-}
+  height: 55px;
+  width: 55px;
 
-/* 09/16/2022 BZ - Added search input box style. */
-#search-term{
-  /* margin-top: 5px;
-  border:1px solid lightgrey;
-  border-radius: 5px;
-  box-shadow: 0 1px 2px darkslategray; */
+  /* Make Transparent */
+  /* opacity:0.5;
+  filter:alpha(opacity=40);   */
 }
