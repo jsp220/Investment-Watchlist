@@ -23,7 +23,6 @@ var favCrypto;
 function init() {
     // Retrieve favorite assets data from local storage
     var favCryp = localStorage.getItem("cryptoList");
-    console.log(favCryp);
     if (!favCryp) {
         $(".crypto-list").attr("style", "display: none");
     } else {

@@ -8,7 +8,7 @@
     ============
     09/14/2022 Brian Zoulko    Created news api call module as a function.
 */
-const cCRYPTO_NEWS_URL = 'https://crypto-news-live3.p.rapidapi.com/news'
+const cCRYPTO_NEWS_URL = 'https://crypto-news-live3.p.rapidapi.com/news';
 
 
 /* *****************
