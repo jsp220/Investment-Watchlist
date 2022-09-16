@@ -1,3 +1,14 @@
+/*
+    Created:    09/15/2022 
+    Programmer: Brian Zoulko, Joon Park, Ryan Dao, Qi Chen
+    Notes:      Module provides api calls and stores detail in local storage.
+
+    Modification
+    ============
+    09/15/2022 Brian Zoulko    Added newsapi.js to the Add function for the
+                               adding the crypto news to the html web page.
+*/
+
 function DarkMode() {
     var toggle = document.body;
     toggle.classList.toggle("dark-mode");
@@ -175,12 +186,47 @@ $("#add").on("click", async function(event) {
             appendFave(data);   
         }
         $(this).siblings("#search-term").val("");
+
+        // 09/15/2022 BZ - Created function to load news.
+        loadNewsFor(SearchTerm);
+
         return;
     } else if ($("input:radio[name=asset-type]:checked").val() == "Stock") {
         
         $(this).siblings("#search-term").val("");
         return;
     }
-    
+
 });
 
+
+/* **************************************************  
+    09/15/2022 BZ - Created for loading news.
+    Obtain news detail for requested search criteria.    
+***************************************************** */
+async function loadNewsFor(searchCriteria) {
+    
+    var objCrypto = await getCryptoNews(searchCriteria);
+    var newsDetail = $(".crypto-news"); // Reset text every time.
+    var newDivArea = $('<div class="added-news-area">');
+    newsDetail.find('.added-news-items').remove();
+    newsDetail.append($("<hr>"));
+
+    // Add Crypto News to the HTML page.
+    for (let i = 0; i < objCrypto.length; i++) {
+        var newsItems = $(`<li class='added-news-items'>`);
+        newsItems.text(objCrypto[i].source);
+        newDivArea.append(newsItems);
+    }
+    newsDetail.append(newDivArea);
+
+}
+
+// test search term
+// var cryptoSearchTerm = "ADA";
+// search(cryptoSearchTerm);
+
+// async function search (cryptoSearchTerm) {
+//     var cryptoId = await searchTermToId(cryptoSearchTerm);
+//     cryptoApi(cryptoId);
+// }

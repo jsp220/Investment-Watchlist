@@ -66,7 +66,44 @@ h2 {
 #search-term {
   width: 70%;
   margin-right: 2%;
+} */
+
+/* 09/15/2022 BZ - Added news api detail font sizes. */
+.added-news-items {
+/*  color:dimgray; */
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  margin-top: 15px !important;
+  margin-left: 18px !important;
+  margin-bottom: 15px !important;
 }
+
+/* 09/16/2022 BZ - Added title news caption font size. */
+.crypto-news {
+  font-size: 42px;
+  font-weight: 500;
+}
+
+/* 09/16/2022 BZ - Added title news caption font size. */
+.added-news-area {
+    border:1px solid lightgrey;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 4px #121212;
+}
+
+/* 09/16/2022 BZ - Added title news icon settings. */
+#crypto-news-icon {
+  margin-top: 20px;
+  margin-right: 10px;
+  vertical-align:text-bottom;
+  height: 55px;
+  width: 55px;
+
+  /* Make Transparent */
+  /* opacity:0.5;
+  filter:alpha(opacity=40);   */
+}
+
 
 #add {
   width: 28%;
