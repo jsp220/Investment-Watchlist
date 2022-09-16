@@ -16,6 +16,14 @@ h1 {
   padding: 1%;
 }
 
+h2 {
+  font-size: 1.75em;
+  line-height: 1;
+  margin: 0;
+  padding: 2%;
+  border-bottom: 1px solid #e0e0e0;
+}
+
 .bold {
   font-weight: bolder;
 }
@@ -49,21 +57,29 @@ h1 {
   justify-content: space-between;
 }
 
-/* .search-box {
-  padding: 0 2%;
-} */
-
 .flex {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 #search-term {
-  width: 60%;
+  width: 70%;
+  margin-right: 2%;
 }
 
 #add {
-  width: 40%;
+  width: 28%;
+}
+
+.crypto {
+  margin-right: 15px;
+}
+
+#warning {
+  width: 50%;
+  text-align: right;
+  color: red;
 }
 
 
