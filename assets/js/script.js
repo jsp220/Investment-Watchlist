@@ -41,7 +41,7 @@ async function cryptoApi(cryptoId) {
 }
 
 function appendFave (data) {
-    var divEl = $(`<div class='row collection-item list-item bold' id='${data.id}'>`);
+    var divEl = $(`<div class='collection-item list-item bold' id='${data.id}'>`);
     var symEl = $("<div class='s2'>");
     var priceEl = $("<div class='s3'>");
     var priceChgEl = $("<div class='s3'>");
