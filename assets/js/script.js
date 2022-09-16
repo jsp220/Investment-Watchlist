@@ -179,7 +179,8 @@ $("#add").on("click", async function(event) {
 async function loadNewsFor(searchCriteria) {
     
     var objCrypto = await getCryptoNews(searchCriteria);
-    var newsDetail = $(".crypto-news").text("News"); // Reset text every time.
+    var newsDetail = $(".crypto-news"); // Reset text every time.
+    var newDivArea = $('<div class="added-news-area">');
     newsDetail.find('.added-news-items').remove();
     newsDetail.append($("<hr>"));
 
@@ -187,8 +188,9 @@ async function loadNewsFor(searchCriteria) {
     for (let i = 0; i < objCrypto.length; i++) {
         var newsItems = $(`<li class='added-news-items'>`);
         newsItems.text(objCrypto[i].source);
-        newsDetail.append(newsItems);
+        newDivArea.append(newsItems);
     }
+    newsDetail.append(newDivArea);
 
 }
 
