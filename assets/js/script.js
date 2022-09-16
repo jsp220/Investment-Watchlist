@@ -1,3 +1,14 @@
+/*
+    Created:    09/15/2022 
+    Programmer: Brian Zoulko, Joon Park, Ryan Dao, Qi Chen
+    Notes:      Module provides api calls and stores detail in local storage.
+
+    Modification
+    ============
+    09/15/2022 Brian Zoulko    Added newsapi.js to the Add function for the
+                               adding the crypto news to the html web page.
+*/
+
 function DarkMode() {
     var toggle = document.body;
     toggle.classList.toggle("dark-mode");
@@ -20,7 +31,6 @@ function init() {
     }
     // console.log(favCrypto);
     favCryptoApi(favCrypto);
-
 }
 
 async function favCryptoApi(favCrypto) {
@@ -42,55 +52,15 @@ async function cryptoApi(cryptoId) {
 }
 
 function appendFave (data) {
-    var divEl = $(`<div class='row collection-item list-item bold' id='${data.id}'>`);
-    var symEl = $("<div class='s2'>");
-    var priceEl = $("<div class='s3'>");
-    var priceChgEl = $("<div class='s3'>");
-    var delBtnEl = $("<button class='btn-floating btn-small waves-effect waves-light red remove'><i class='material-icons'>-</i></button>")
-    var sym = data.symbol;
-    var sym = sym.toUpperCase();
+    var divEl = $("<div class='test'>");
+    var symb = data.symbol;
+    var symb = symb.toUpperCase();
     var price = data.market_data.current_price.usd;
     var priceChg = data.market_data.price_change_24h;
+    var priceChg = priceChg.toFixed(2);
     var priceChgPcnt = (priceChg/price*100).toFixed(2);
-
-    var formatter = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-    });
-      
-    formatter.format(price);
-
-    if (Math.abs(priceChg) < 0.01) {
-        priceChg = priceChg.toPrecision(2);
-    } else {
-        priceChg = priceChg.toFixed(2);
-    }
-    
-    symEl.text(sym);
-    priceEl.text(`$${price}`);
-    priceChgEl.text(`$${priceChg} (${priceChgPcnt}%)`);
-    if (priceChg < 0) {
-        priceChgEl.addClass("red-font");
-    } else if (priceChg > 0) {
-        priceChgEl.addClass("green-font");
-    }
-
-    divEl.append(symEl, priceEl, priceChgEl, delBtnEl);
+    divEl.text(`${symb} $${price} $${priceChg} (${priceChgPcnt}%)`);
     $(".fav-list").append(divEl);
-
-    $(".remove").on("click", function() {
-        var remId = $(this).parent().attr("id");
-        
-        console.log(favCrypto);
-        for (i in favCrypto) {
-            if (remId === favCrypto[i]) {
-                favCrypto.splice(i, 1);
-            }
-        }
-        localStorage.setItem("cryptoList", JSON.stringify(favCrypto));
-
-        $(this).parent().remove();
-    });
 }
 
 async function searchTermToId(term) {
@@ -102,7 +72,6 @@ async function searchTermToId(term) {
     for (i in data) {
         if (term == data[i].id || term == data[i].name || term == data[i].symbol) {
             cryptoId = data[i].id;
-            console.log(cryptoId);
             break;
         }
     }
@@ -110,7 +79,6 @@ async function searchTermToId(term) {
         console.log("Search term not found"); // replace with code that displays error message in a modal
         return;
     }
-
     return cryptoId;
 }
 
@@ -144,29 +112,18 @@ $("#add").on("click", async function(event) {
     var cryptoId = await searchTermToId(cryptoSearchTerm);
     var data = await cryptoApi(cryptoId);
     appendFave(data);
-    var favCryp = localStorage.getItem("cryptoList");
-    if (!favCryp) {
-        favCrypto = [];
-    } else {
-        favCrypto = JSON.parse(favCryp);
-    }
+    // var favCryp = localStorage.getItem("cryptoList");
+    // if (!favCryp) {
+    //     favCrypto = [];
+    // } else {
+    //     favCrypto = JSON.parse(favCryp);
+    // }
     favCrypto.push(cryptoId);
     localStorage.setItem("cryptoList", JSON.stringify(favCrypto));
-
-    $(this).siblings("#search-term").val("");
 
     // 09/15/2022 BZ - Created function to load news.
     loadNewsFor(cryptoSearchTerm);
 });
-
-// test search term
-// var cryptoSearchTerm = "ADA";
-// search(cryptoSearchTerm);
-
-// async function search (cryptoSearchTerm) {
-//     var cryptoId = await searchTermToId(cryptoSearchTerm);
-//     cryptoApi(cryptoId);
-// }
 
 
 /* **************************************************  

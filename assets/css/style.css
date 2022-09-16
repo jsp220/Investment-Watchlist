@@ -1,82 +1,46 @@
 body {
-  padding: 2%;
+  padding: 25px;
   background-color: #e0e0e0;
   color: black;
-  font-size: 1.2em;
+  font-size: 25px;
 }
 .row {
-  /* margin: auto !important; */
-  display: flex;
-  justify-content: space-between;
+  margin-left: auto !important;
 }
-
 .dark-mode {
   background-color: #121212;
   color: #03DAC5;
 }
-.dark-mode div.col.s2,
-.dark-mode div.col.s3,
-.dark-mode div.col.s4,
-.dark-mode div.col.s8,
 .dark-mode div.col.s9 {
   background-color:#212121;
 }
-
-.dark-mode .collection-item {
-  background-color:#212121
+.dark-mode div.col.s2 {
+  background-color:#212121 ;
 }
-
 .dark-mode header.col-12.center.test {
   background-color:#212121 ;
 }
-
-div.col.s2,
-div.col.s3,
-div.col.s4,
-div.col.s8,
 div.col.s9 { 
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 1px 2px #121212;
 }
 
-header.col-12.center.test {
+div.col.s2{
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 1px 2px #121212;
 }
 
-.left-box {
-  margin-right: 0.5%;
+header.col-12.center.test{
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px #121212;
 }
 
-.right-box {
-  margin-left: 0.5%;
-}
-
-.list-item {
-  align-items: center;
-}
-
-.bold {
-  font-weight: bolder;
-}
-
-.red-font {
-  color: red;
-}
-
-.green-font {
-  color: green;
-}
-
-.row:after {
-  display:none;
-}
-
-/* .rightBox {
+.rightBox {
   margin-right: 2%;
-} */
+}
 
 /* 09/15/2022 BZ - Added news api detail font sizes. */
 .added-news-source {
