@@ -73,15 +73,8 @@ h2 {
 /*  color:dimgray; */
   font-size: 16px !important;
   font-weight: 400 !important;
-  margin-top: 15px !important;
   margin-left: 18px !important;
   margin-bottom: 15px !important;
-}
-
-/* 09/16/2022 BZ - Added title news caption font size. */
-.crypto-news {
-  font-size: 42px;
-  font-weight: 500;
 }
 
 /* 09/16/2022 BZ - Added title news caption font size. */
