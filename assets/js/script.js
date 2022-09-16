@@ -54,7 +54,7 @@ async function cryptoApi(cryptoId) {
 
 function appendFave (data) {
     var divEl = $(`<div class='collection-item list-item bold' id='${data.id}'>`);
-    var symEl = $("<div class='s2'>");
+    var symEl = $("<button class='waves-effect waves-light btn-small load-news-item'>'s2'</button>");
     var priceEl = $("<div class='s3'>");
     var priceChgEl = $("<div class='s3'>");
     var delBtnEl = $("<button class='btn-floating btn-small waves-effect waves-light red remove'><i class='material-icons'>-</i></button>")
@@ -117,6 +117,13 @@ function appendFave (data) {
         }
         $(this).parent().remove();
     });
+
+    // 09/16/2022 BZ - Added new button for a quick reload of that item.
+    $(".load-news-item").on("click", function() {
+        var txtVal = $(this).parent().text().split("$");        
+        loadNewsFor(txtVal[0]);
+    });
+
 }
 
 async function searchTermToId(term) {
@@ -212,10 +219,13 @@ async function loadNewsFor(searchCriteria) {
     newsDetail.find('.added-news-area').remove();
 
     // Add Crypto News to the HTML page.
+    if (objCrypto.length === 0) return;
     for (let i = 0; i < objCrypto.length; i++) {
-        var newsItems = $(`<li class='added-news-items'>`);
+        var newsDivItem = $(`<div class='added-news-items'>`);
+        var newsItems = $(`<a href="${objCrypto[i].url}"  target="_blank" class='added-news-items'>`);
         newsItems.text(objCrypto[i].source);
-        newDivArea.append(newsItems);
+        newsDivItem.append(newsItems);
+        newDivArea.append(newsDivItem);
     }
     newsDetail.append(newDivArea);
 
