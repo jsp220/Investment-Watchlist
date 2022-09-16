@@ -87,7 +87,15 @@ header.col-12.center.test {
   margin-bottom: 15px;
 }
 
+/* 09/16/2022 BZ - Added title news caption font size. */
 .crypto-news {
   font-size: 32px;
   font-weight: 500;
+}
+
+/* 09/16/2022 BZ - Added search input box style. */
+#search-term{
+  /* margin-top: 5px;
+  background-color: lightyellow; */
+  /*box-shadow: 0 1px 2px #121212;*/
 }
