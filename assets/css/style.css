@@ -4,59 +4,24 @@ body {
   color: black;
   font-size: 1.2em;
 }
-.row {
-  /* margin: auto !important; */
-  display: flex;
-  justify-content: space-between;
-}
 
-.dark-mode {
-  background-color: #121212;
-  color: #03DAC5;
-}
-
-.dark-mode div.col.s2,
-.dark-mode div.col.s3,
-.dark-mode div.col.s4,
-.dark-mode div.col.s8,
-.dark-mode div.col.s9 {
-  background-color:#212121;
-}
-
-.dark-mode .collection-item {
-  background-color:#212121
-}
-
-.dark-mode header.col-12.center.test {
-  background-color:#212121 ;
-}
-
-div.col.s2,
-div.col.s3,
-div.col.s4,
-div.col.s8,
-div.col.s9 { 
+header {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 1px 2px #121212;
 }
 
-header.col-12.center.test {
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 1px 2px #121212;
+h1 {
+  font-size: 2.25em;
+  padding: 1%;
 }
 
-.left-box {
-  margin-right: 0.5%;
-}
-
-.right-box {
-  margin-left: 0.5%;
-}
-
-.list-item {
-  align-items: center;
+h2 {
+  font-size: 1.5em;
+  line-height: 1;
+  margin: 0;
+  padding: 2%;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .bold {
@@ -71,22 +36,46 @@ header.col-12.center.test {
   color: green;
 }
 
-.row:after {
-  display:none;
+.s12 {
+  width: 100% !important;
 }
 
-/* .rightBox {
+.left-box,
+.right-box { 
+  margin-bottom: 2%;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px #121212;
+}
+
+.list-item {
+  align-items: center;
+}
+
+.collection-item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#search-term {
+  width: 70%;
   margin-right: 2%;
 } */
 
 /* 09/15/2022 BZ - Added news api detail font sizes. */
 .added-news-items {
 /*  color:dimgray; */
-  font-size: 16px;
-  font-weight: 400;
-  margin-top: 15px;
-  margin-left: 18px;
-  margin-bottom: 15px;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  margin-top: 15px !important;
+  margin-left: 18px !important;
+  margin-bottom: 15px !important;
 }
 
 /* 09/16/2022 BZ - Added title news caption font size. */
@@ -113,4 +102,86 @@ header.col-12.center.test {
   /* Make Transparent */
   /* opacity:0.5;
   filter:alpha(opacity=40);   */
+}
+
+
+#add {
+  width: 28%;
+}
+
+.crypto {
+  margin-right: 15px;
+}
+
+#warning {
+  width: 50%;
+  text-align: right;
+  color: red;
+}
+
+
+
+/* Dark mode colors */
+.dark-mode {
+  background-color: #121212;
+  color: #03DAC5;
+}
+
+.dark-mode div.col.left-box {
+  background-color:#212121;
+}
+
+.dark-mode div.col.right-box {
+  background-color:#212121;
+}
+
+.dark-mode .collection-item {
+  background-color:#212121
+}
+
+.dark-mode header {
+  background-color:#212121 ;
+}
+
+
+
+/* When using `max-width` as the breakpoint, you must go from widest to narrowest to avoid conflict */
+
+/* Large smartphones */
+@media only screen and (min-width: 601px) {
+  
+}
+
+/* Tablets */
+@media only screen and (min-width: 993px) {
+  .l6 {
+    width: 49% !important;
+  }
+
+  .left-box {
+    margin-right: 2%;
+  }
+  
+  .right-box {
+    margin-left: 2%;
+  }
+}
+
+
+
+@media only screen and (min-width: 1301px) {
+  .xl4 {
+    width: 32.333% !important;
+  }
+  .xl8 {
+    width: 65.666% !important;
+  }
+  
+  .left-box {
+    margin-right: 2%;
+  }
+  
+  .right-box {
+    margin-left: 2%;
+  }
 }
