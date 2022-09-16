@@ -18,27 +18,38 @@
           Dark
         </label>
       </div>
-    <header class="col-12 center test"><h1>Investment Watchlist</h1> </header>
+    <header class="col-12 center"><h1 class="header bold">Investment Watchlist</h1> </header>
 
 <main>
-        <div class="p-0 row">
-            <div class="col s3 left-box">
-                <form class="search-box">
-                    <input id="search-term" type="text" placeholder="bitcoin" />
-                    <button type="submit" class="btn" id="add">Add</button>
-                </form>
-                <div class="fav-list collection"></div>
-                <div class="test">currency</div>
+    <div class="row">
+        <div class="col s12 l6 xl4 left-box">
+            <form class="search-box flex">
+                <input id="search-term" type="text" autofocus="autofocus" placeholder="AAPL, BTC, ethereum" />
+                <button type="submit" class="btn" id="add">Search</button>
+                <label class="crypto">
+                    <input name="asset-type" type="radio" id="crypto" value="Crypto" checked />
+                    <span>Crypto</span>
+                </label>
+                <label class="stock">
+                    <input name="asset-type" type="radio" id="stock" value="Stock"/>
+                    <span>Stock</span>
+                </label>
+                <div id="warning"></div>
+            </form>
+            <div class="fav-list collection">
+                <h2 class="crypto-list bold" style="display: none">Cryptocurrency</h2>
             </div>
-            <div class="col s9 right-box">News
-                <div class="test">News 1</div>
-                <div class="test">News 2</div>
-                <div class="test">News 3</div>
-                <div class="test">News 4</div>
-                <div class="test">News 5</div>
-                <div class="test">News 6</div>
-            </div>
+            <div class="test">currency</div>
         </div>
+        <div class="col s12 l6 xl8 right-box">News
+            <div class="test">News 1</div>
+            <div class="test">News 2</div>
+            <div class="test">News 3</div>
+            <div class="test">News 4</div>
+            <div class="test">News 5</div>
+            <div class="test">News 6</div>
+        </div>
+    </div>
 </main>    
 
 <!-- JQuery -->
@@ -47,6 +58,8 @@ integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="ano
 <!-- Compiled and minified Materialize JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script src="./assets/js/script.js" ></script>
-
+<script src="./assets/js/newsapi.js" ></script>
+<!-- <script src="./assets/js/stock_tracker.js" ></script> -->
+<!-- <script src="./assets/js/Currency_Exchange.js" ></script> -->
 </body>
 </html>
