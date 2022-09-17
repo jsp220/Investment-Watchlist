@@ -21,9 +21,12 @@ function init() {
     // Retrieve favorite assets data from local storage  (init for crypto)
     var favCryp = localStorage.getItem("cryptoList");
     if (!favCryp || favCryp == "undefined" || favCryp == "[]") {
-        $(".crypto-list").attr("style", "display: none");
+        // $(".crypto-list").attr("style", "display: none");
+        $(".crypto-list").parent().hide();
+
     } else {
-        $(".crypto-list").attr("style", "display: block");
+        // $(".crypto-list").attr("style", "display: block");
+        $(".crypto-list").parent().show();
         favCrypto = JSON.parse(favCryp);
         favCrypto.splice(10); // limit to 10 crypto?
         favCryptoApi(favCrypto);
@@ -32,9 +35,11 @@ function init() {
     // init for stock
     var favStoc = localStorage.getItem("stockList");
     if (!favStoc || favStoc == "undefined" || favStoc == "[]") {
-        $(".stock-list").attr("style", "display: none");
+        // $(".stock-list").attr("style", "display: none");
+        $(".stock-list").parent().hide();
     } else {
-        $(".stock-list").attr("style", "display: block");
+        // $(".stock-list").attr("style", "display: block");
+        $(".stock-list").parent().show();
         favStock = JSON.parse(favStoc);
         favStock.splice(10);
         for (let i in favStock){
@@ -106,7 +111,8 @@ function appendFave (data) {
         priceChgEl.addClass("green-font");
     }
 
-    $(".crypto-list").attr("style", "display: block");
+    // $(".crypto-list").attr("style", "display: block");
+    $(".crypto-list").parent().show();
     divEl.append(symEl, priceEl, priceChgEl, delBtnEl);
     $(".fav-list").append(divEl);
 
@@ -121,7 +127,8 @@ function appendFave (data) {
         localStorage.setItem("cryptoList", JSON.stringify(favCrypto));
 
         if (favCrypto.length == 0) {
-            $(".crypto-list").attr("style", "display: none");
+            // $(".crypto-list").attr("style", "display: none");
+            $(".crypto-list").parent().hide();
             localStorage.clear();
         }
         $(this).parent().remove();
@@ -196,9 +203,14 @@ async function fetchStock(stock) {
         var sym = response.data.symbol;
         var price = response.data.currentPrice;
         var priceChg = response.data.currentPrice - response.data.open;
+        console.log(priceChg);
+        if (!priceChg) {
+            priceChg = 0;
+        }
+
         var marketCap = response.data.marketCap;
 
-        if (Math.abs(priceChg) < 0.01) {
+        if (Math.abs(priceChg) > 0 && Math.abs(priceChg) < 0.01) {
             priceChg = priceChg.toPrecision(2);
         } else {
             priceChg = priceChg.toFixed(2);
@@ -227,7 +239,8 @@ async function fetchStock(stock) {
             priceChgEl.addClass("green-font");
         }          
 
-        $(".stock-list").attr("style", "display: block");
+        // $(".stock-list").attr("style", "display: block");
+        $(".stock-list").parent().show();
         divEl.append(symEl, priceEl, priceChgEl, delBtnEl);
         $(".fav-stock-list").append(divEl);
 
@@ -244,7 +257,8 @@ async function fetchStock(stock) {
             localStorage.setItem("stockList", JSON.stringify(favStock));
 
             if (favStock.length == 0) {
-                $(".stock-list").attr("style", "display: none");
+                // $(".stock-list").attr("style", "display: none");
+                $(".stock-list").parent().hide();
             } else {
 
             }
@@ -304,7 +318,7 @@ $("#add").on("click", async function(event) {
         $(this).siblings("#search-term").val("");
 
         // 09/15/2022 BZ - Created function to load news.
-        loadNewsFor(searchTerm);
+        loadNewsFor(cryptoId);
 
         return;
         
@@ -323,15 +337,12 @@ $("#add").on("click", async function(event) {
         if (jQuery.inArray(stockId, favStock) == -1) {
             
             var stockSuccess = await fetchStock(stockId);
-
-            console.log(stockSuccess);
             if (!stockSuccess) {
                 $(this).siblings("#search-term").val("");
                 console.log("a")
                 return;
             } else {
                 favStock.push(stockId);
-                console.log(favStock);
                 localStorage.setItem("stockList", JSON.stringify(favStock));
             }
         }
