@@ -46,14 +46,11 @@ h2 {
   background-color: white;
   border-radius: 10px;
   box-shadow: 0 1px 2px #121212;
+  min-height: 100px !important;
 }
 
 .list-item {
   align-items: center;
-}
-
-.collection {
-  /* border: none !important; */
 }
 
 .collection-item {
