@@ -52,6 +52,10 @@ h2 {
   align-items: center;
 }
 
+.collection {
+  /* border: none !important; */
+}
+
 .collection-item {
   display: flex;
   justify-content: space-between;
@@ -69,14 +73,19 @@ h2 {
 } */
 
 /* 09/15/2022 BZ - Added news api detail font sizes. */
+
+.news-items {
+  margin: auto;
+}
+
 .added-news-items {
-/*  color:dimgray; */
-  padding: 10px;
+  /*  color:dimgray; */
   font-size: 16px;
   font-weight: 400;
   margin-left: 18px;
-  margin-bottom: 15px;
-  border:5px solid lightgrey;
+  /* margin-bottom: 15px; */
+  line-height: 1.5em;
+  /* border:2px solid lightgrey; */
 }
 
 /* 09/16/2022 BZ - Added title news underline. */
@@ -119,8 +128,6 @@ h2 {
   color: red;
 }
 
-
-
 /* Dark mode colors */
 .dark-mode {
   background-color: #121212;
@@ -143,6 +150,17 @@ h2 {
   background-color:#212121 ;
 }
 
+.dark-mode .green-font {
+  color: #03DA5D;
+}
+
+.dark-mode .red-font {
+  color: #CF6679;
+}
+
+.dark-mode #search-term {
+  color: lightgray;
+}
 
 
 /* When using `max-width` as the breakpoint, you must go from widest to narrowest to avoid conflict */
@@ -166,8 +184,6 @@ h2 {
     margin-left: 2%;
   }
 }
-
-
 
 @media only screen and (min-width: 1301px) {
   .xl4 {
