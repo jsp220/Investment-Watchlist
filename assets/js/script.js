@@ -14,43 +14,37 @@ function DarkMode() {
     toggle.classList.toggle("dark-mode");
  }
 
-
-//  Crypto API
-
-// for testing init
 var favCrypto;
 var favStock;
 
 function init() {
     // Retrieve favorite assets data from local storage  (init for crypto)
     var favCryp = localStorage.getItem("cryptoList");
-    console.log(favCryp);
-    if (!favCryp) {
-        $(".crypto-list").attr("style", "display: none");
+    if (!favCryp || favCryp == "undefined" || favCryp == "[]") {
+        // $(".crypto-list").attr("style", "display: none");
+        $(".crypto-list").parent().hide();
+
     } else {
-        $(".crypto-list").attr("style", "display: block");
+        // $(".crypto-list").attr("style", "display: block");
+        $(".crypto-list").parent().show();
         favCrypto = JSON.parse(favCryp);
         favCrypto.splice(10); // limit to 10 crypto?
         favCryptoApi(favCrypto);
     }
 
     // init for stock
-    var favStocks = localStorage.getItem("stockList");
-    if (!favStocks){
-
-        favStocks = [];
-
-    }
-    else{
-        favStock = JSON.parse(favStocks);
+    var favStoc = localStorage.getItem("stockList");
+    if (!favStoc || favStoc == "undefined" || favStoc == "[]") {
+        // $(".stock-list").attr("style", "display: none");
+        $(".stock-list").parent().hide();
+    } else {
+        // $(".stock-list").attr("style", "display: block");
+        $(".stock-list").parent().show();
+        favStock = JSON.parse(favStoc);
         favStock.splice(10);
-        console.log(favStock);
-
-    }
-    for (let i in favStock){
-
-        fetchStock(favStock[i])
-
+        for (let i in favStock){
+            fetchStock(favStock[i])
+        }
     }
 }
 
@@ -109,7 +103,7 @@ function appendFave (data) {
     }
     
     symEl.text(sym);
-    priceEl.text(`${price}`);
+    priceEl.text(price);
     priceChgEl.text(`$${priceChg} (${priceChgPcnt}%)`);
     if (priceChg < 0) {
         priceChgEl.addClass("red-font");
@@ -117,7 +111,8 @@ function appendFave (data) {
         priceChgEl.addClass("green-font");
     }
 
-    $(".crypto-list").attr("style", "display: block");
+    // $(".crypto-list").attr("style", "display: block");
+    $(".crypto-list").parent().show();
     divEl.append(symEl, priceEl, priceChgEl, delBtnEl);
     $(".fav-list").append(divEl);
 
@@ -132,18 +127,19 @@ function appendFave (data) {
         localStorage.setItem("cryptoList", JSON.stringify(favCrypto));
 
         if (favCrypto.length == 0) {
-            $(".crypto-list").attr("style", "display: none");
+            // $(".crypto-list").attr("style", "display: none");
+            $(".crypto-list").parent().hide();
             localStorage.clear();
         }
         $(this).parent().remove();
     });
 
     // 09/16/2022 BZ - Added new button for a quick reload of that item.
-    $(".load-news-item").on("click", function() {
+    $(".load-news-item").on("click", async function() { 
         var txtVal = $(this).parent().text().split("$");        
-        loadNewsFor(txtVal[0]);
+        var cryptoIdName = await searchTermToId(txtVal[0]);
+        loadNewsFor(cryptoIdName[1]);
     });
-
 }
 
 async function searchTermToId(term) {
@@ -153,10 +149,14 @@ async function searchTermToId(term) {
         })
     term = term.toLowerCase();
     var cryptoId = 0;
+    var cryptoName = 0;
     for (i in data) {
-        if (term == data[i].id || term == data[i].name || term == data[i].symbol) {
-            cryptoId = data[i].id;
-            break;
+        if (!data[i].id.startsWith("binance")) {
+            if (term == data[i].id || term == data[i].name || term == data[i].symbol) {
+                cryptoId = data[i].id;
+                cryptoName = data[i].name;
+                break;
+            }
         }
     }
     if (!cryptoId) {       
@@ -169,79 +169,10 @@ async function searchTermToId(term) {
         return;
     }
 
-    return cryptoId;
+    return [cryptoId, cryptoName];
 }
 
-
-init();
-
-$("#add").on("click", async function(event) {
-    event.preventDefault();
-
-    var SearchTerm = $(this).siblings("#search-term").val();
-    console.log($('#crypto').is(":checked"));
-    console.log($('#stock').is(":checked"));
-    var crypto = $('#crypto').is(":checked")
-    var stock = $('#stock').is(':checked')
-
-    if(crypto){
-    
-    if (!SearchTerm) {
-        $("#warning").show();
-        $("#warning").text("Please enter a search term.");
-
-        var timer = setInterval(function() {
-            $("#warning").fadeOut();
-        }, 2000);
-        return;
-    }
-
-    if ($("input:radio[name=asset-type]:checked").val() == "Crypto") {
-        var cryptoId = await searchTermToId(SearchTerm);
-
-        if (!cryptoId) {
-            $(this).siblings("#search-term").val("");
-            return;
-        }
-
-        var favCryp = localStorage.getItem("cryptoList");
-        if (!favCryp) {
-            favCrypto = [];
-        } else {
-            favCrypto = JSON.parse(favCryp);
-        }
-        
-        if (jQuery.inArray(cryptoId, favCrypto) == -1) {
-            favCrypto.push(cryptoId);
-            localStorage.setItem("cryptoList", JSON.stringify(favCrypto));
-
-            var data = await cryptoApi(cryptoId);
-            appendFave(data);   
-        }
-        $(this).siblings("#search-term").val("");
-
-        // 09/15/2022 BZ - Created function to load news.
-        loadNewsFor(SearchTerm);
-
-        return;
-    } else if ($("input:radio[name=asset-type]:checked").val() == "Stock") {
-        
-        $(this).siblings("#search-term").val("");
-        return;
-    }
-}
-else if(stock){
-
-        var favStock = [];
-        var stockID = $(this).siblings("#search-term").val();
-        favStock.push(stockID)
-        console.log(favStock);
-        localStorage.setItem('stockList', JSON.stringify(favStock));
-        fetchStock(favStock[favStock.length-1]);
-}
-});
-
-async function fetchStock(stock){
+async function fetchStock(stock) {
 
     const encodedParams = new URLSearchParams();
     encodedParams.append("symbol", `${stock}`);
@@ -256,67 +187,173 @@ async function fetchStock(stock){
         body: encodedParams
     };
 
-    await fetch('https://yahoo-finance97.p.rapidapi.com/stock-info', options)
+    var response = await fetch('https://yahoo-finance97.p.rapidapi.com/stock-info', options)
         .then(response => response.json())
-        .then(function(response){
+    
+    if (!response.data.symbol) {
+        $("#warning").show();
+        $("#warning").text("Search term not found.");
 
-            console.log(response);
-            var divEl = $(`<div class='row collection-item list-item bold' id='${response.data.symbol}'>`);
-            var symEl = $("<button class='waves-effect waves-light btn-small load-news-item'>'s2'</button>");
-            var priceEl = $("<div class='s3'>");
-            var priceChgEl = $("<div class='s3'>");
-            var delBtnEl = $("<button class='btn-floating btn-small waves-effect waves-light red remove'><i class='material-icons'>-</i></button>")
-            var sym = response.data.symbol;
-            var price = response.data.currentPrice;
-            var priceChg = (response.data.currentPrice - response.data.open).toFixed(2);
-            var marketCap = response.data.marketCap;
+        var timer = setInterval(function() {
+            $("#warning").fadeOut();
+        }, 2000);
+        return false;
+    } else {
+        var divEl = $(`<div class='collection-item list-item bold' id='${response.data.symbol.toLowerCase()}'>`);
+        var symEl = $("<button class='waves-effect waves-light btn-small load-news-item'>'s2'</button>");
+        var priceEl = $("<div class='s3'>");
+        var priceChgEl = $("<div class='s3'>");
+        var delBtnEl = $("<button class='btn-floating btn-small waves-effect waves-light red remove'><i class='material-icons'>-</i></button>")
+        var sym = response.data.symbol;
+        var price = response.data.currentPrice;
+        var priceChg = response.data.currentPrice - response.data.open;
+        console.log(priceChg);
+        if (!priceChg) {
+            priceChg = 0;
+        }
+
+        var marketCap = response.data.marketCap;
+
+        if (Math.abs(priceChg) > 0 && Math.abs(priceChg) < 0.01) {
+            priceChg = priceChg.toPrecision(2);
+        } else {
+            priceChg = priceChg.toFixed(2);
+        }
+
+        if (!price) {
+            priceChgPcnt = "0.00";
+            price = "0.00";
+        } else {
             var priceChgPcnt = (priceChg/price*100).toFixed(2);
-            var delBtnEl = $("<button class='btn-floating btn-small waves-effect waves-light red remove'><i class='material-icons'>-</i></button>")
-            var formatter = new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-                 });
-              
-            formatter.format(price);
-        
-            if (Math.abs(priceChg) < 0.01) {
-                priceChg = priceChg.toPrecision(2);
-            } else {
-                priceChg = priceChg;
-            }
+        }
+
+        var formatter = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        });
             
-            symEl.text(sym);
-            priceEl.text(`$${price}`);
-            priceChgEl.text(`$${priceChg} (${priceChgPcnt}%)`);
-            if (priceChg < 0) {
-                priceChgEl.addClass("red-font");
-            } else if (priceChg > 0) {
-                priceChgEl.addClass("green-font");
-            }
-        
-            divEl.append(symEl, priceEl, priceChgEl, delBtnEl);
-            $(".fav-list").append(divEl);
-        
-            $(".remove").on("click", function() {
-                var remId = $(this).parent().attr("id");
-                
-                console.log(favStock);
-                for (i in favStock) {
-                    if (remId === favStock[i]) {
-                        favStock.splice(i, 1);
-                    }
+        price = formatter.format(price);
+
+        symEl.text(sym);
+        priceEl.text(price);
+        priceChgEl.text(`$${priceChg} (${priceChgPcnt}%)`);
+        if (priceChg < 0) {
+            priceChgEl.addClass("red-font");
+        } else if (priceChg > 0) {
+            priceChgEl.addClass("green-font");
+        }          
+
+        // $(".stock-list").attr("style", "display: block");
+        $(".stock-list").parent().show();
+        divEl.append(symEl, priceEl, priceChgEl, delBtnEl);
+        $(".fav-stock-list").append(divEl);
+
+        $(".remove").on("click", function() {
+            var remId = $(this).parent().attr("id");
+            
+            console.log(remId)
+
+            for (i in favStock) {
+                if (remId === favStock[i]) {
+                    favStock.splice(i, 1);
                 }
-                
-                localStorage.setItem("stockList", JSON.stringify(favStock));
-        
-                $(this).parent().remove();
-            });
+            }
+            localStorage.setItem("stockList", JSON.stringify(favStock));
 
-        })
-        .catch(err => console.error(err));
+            if (favStock.length == 0) {
+                // $(".stock-list").attr("style", "display: none");
+                $(".stock-list").parent().hide();
+            } else {
 
+            }
+
+            $(this).parent().remove();
+        });
+        return true;
+    }
 }
 
+init();
+
+$("#add").on("click", async function(event) {
+    event.preventDefault();
+
+    var searchTerm = $(this).siblings("#search-term").val();
+    // console.log($('#crypto').is(":checked"));
+    // console.log($('#stock').is(":checked"));
+    var crypto = $('#crypto').is(":checked")
+    var stock = $('#stock').is(':checked')
+
+    if (!searchTerm) {
+        $("#warning").show();
+        $("#warning").text("Please enter a search term.");
+
+        var timer = setInterval(function() {
+            $("#warning").fadeOut();
+        }, 2000);
+        return;
+    }
+
+    if (crypto) {
+          
+        var cryptoIdName = await searchTermToId(searchTerm);
+
+        if (!cryptoIdName[0]) {
+            $(this).siblings("#search-term").val("");
+            return;
+        }
+
+        var favCryp = localStorage.getItem("cryptoList");
+
+        if (!favCryp || favCryp == "undefined") {
+            favCrypto = [];
+        } else {
+            favCrypto = JSON.parse(favCryp);
+        }
+        
+        if (jQuery.inArray(cryptoIdName[0], favCrypto) == -1) {
+            favCrypto.push(cryptoIdName[0]);
+            localStorage.setItem("cryptoList", JSON.stringify(favCrypto));
+
+            var data = await cryptoApi(cryptoIdName[0]);
+            appendFave(data);   
+        }
+
+        $(this).siblings("#search-term").val("");
+
+        // 09/15/2022 BZ - Created function to load news.
+        loadNewsFor(cryptoIdName[1]);
+
+        return;
+        
+    } else if (stock) {
+
+        var stockId = $(this).siblings("#search-term").val();
+
+        var favStoc = localStorage.getItem("stockList");
+
+        if (!favStoc || favStoc == "undefined") {
+            favStock = [];
+        } else {
+            favStock = JSON.parse(favStoc);
+        }
+
+        if (jQuery.inArray(stockId, favStock) == -1) {
+            
+            var stockSuccess = await fetchStock(stockId);
+            if (!stockSuccess) {
+                $(this).siblings("#search-term").val("");
+                console.log("a")
+                return;
+            } else {
+                favStock.push(stockId);
+                localStorage.setItem("stockList", JSON.stringify(favStock));
+            }
+        }
+
+        $(this).siblings("#search-term").val("");
+    }  
+});
 
 /* **************************************************  
     09/15/2022 BZ - Created for loading news.
@@ -325,29 +362,27 @@ async function fetchStock(stock){
 async function loadNewsFor(searchCriteria) {
     
     var objCrypto = await getCryptoNews(searchCriteria);
-    var newsDetail = $(".right-box"); // Reset text every time.
+    var newsDetail = $(".right-box"); 
+    // Reset text every time.
     var newDivArea = $('<div class="added-news-area">');
     newsDetail.find('.added-news-area').remove();
 
     // Add Crypto News to the HTML page.
-    if (objCrypto.length === 0) return;
-    for (let i = 0; i < objCrypto.length; i++) {
-        var newsDivItem = $(`<div class='added-news-items'>`);
+    if (!objCrypto) {
+        console.log("no news found");
+        return;
+    }
+    
+    objCrypto.splice(10);
+    
+    for (let i in objCrypto) {
+        // var newsDivItem = $(`<div class='added-news-items'>`);
+        var newsDivItem = $(`<div class='news-items'>`);
         var newsItems = $(`<a href="${objCrypto[i].url}"  target="_blank" class='added-news-items'>`);
         newsItems.text(objCrypto[i].source);
         newsDivItem.append(newsItems);
         newDivArea.append(newsDivItem);
     }
+
     newsDetail.append(newDivArea);
-
 }
-
-
-// test search term
-// var cryptoSearchTerm = "ADA";
-// search(cryptoSearchTerm);
-
-// async function search (cryptoSearchTerm) {
-//     var cryptoId = await searchTermToId(cryptoSearchTerm);
-//     cryptoApi(cryptoId);
-// }
