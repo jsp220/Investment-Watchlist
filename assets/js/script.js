@@ -137,8 +137,8 @@ function appendFave (data) {
     // 09/16/2022 BZ - Added new button for a quick reload of that item.
     $(".load-news-item").on("click", async function() { 
         var txtVal = $(this).parent().text().split("$");        
-        var cryptoId = await searchTermToId(txtVal[0]);
-        loadNewsFor(cryptoId);
+        var cryptoIdName = await searchTermToId(txtVal[0]);
+        loadNewsFor(cryptoIdName[1]);
     });
 }
 
@@ -149,10 +149,14 @@ async function searchTermToId(term) {
         })
     term = term.toLowerCase();
     var cryptoId = 0;
+    var cryptoName = 0;
     for (i in data) {
-        if (term == data[i].id || term == data[i].name || term == data[i].symbol) {
-            cryptoId = data[i].id;
-            break;
+        if (!data[i].id.startsWith("binance")) {
+            if (term == data[i].id || term == data[i].name || term == data[i].symbol) {
+                cryptoId = data[i].id;
+                cryptoName = data[i].name;
+                break;
+            }
         }
     }
     if (!cryptoId) {       
@@ -165,7 +169,7 @@ async function searchTermToId(term) {
         return;
     }
 
-    return cryptoId;
+    return [cryptoId, cryptoName];
 }
 
 async function fetchStock(stock) {
@@ -292,9 +296,9 @@ $("#add").on("click", async function(event) {
 
     if (crypto) {
           
-        var cryptoId = await searchTermToId(searchTerm);
+        var cryptoIdName = await searchTermToId(searchTerm);
 
-        if (!cryptoId) {
+        if (!cryptoIdName[0]) {
             $(this).siblings("#search-term").val("");
             return;
         }
@@ -307,18 +311,18 @@ $("#add").on("click", async function(event) {
             favCrypto = JSON.parse(favCryp);
         }
         
-        if (jQuery.inArray(cryptoId, favCrypto) == -1) {
-            favCrypto.push(cryptoId);
+        if (jQuery.inArray(cryptoIdName[0], favCrypto) == -1) {
+            favCrypto.push(cryptoIdName[0]);
             localStorage.setItem("cryptoList", JSON.stringify(favCrypto));
 
-            var data = await cryptoApi(cryptoId);
+            var data = await cryptoApi(cryptoIdName[0]);
             appendFave(data);   
         }
 
         $(this).siblings("#search-term").val("");
 
         // 09/15/2022 BZ - Created function to load news.
-        loadNewsFor(cryptoId);
+        loadNewsFor(cryptoIdName[1]);
 
         return;
         
@@ -364,8 +368,11 @@ async function loadNewsFor(searchCriteria) {
     newsDetail.find('.added-news-area').remove();
 
     // Add Crypto News to the HTML page.
-    if (objCrypto.length === 0) return;
-
+    if (!objCrypto) {
+        console.log("no news found");
+        return;
+    }
+    
     objCrypto.splice(10);
     
     for (let i in objCrypto) {
