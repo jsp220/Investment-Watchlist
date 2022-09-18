@@ -1,0 +1,50 @@
+/* 
+    Created:    09/17/2022 
+    Programmer: Brian Zoulko
+    Notes:      Created this CSS module for the splash screen html
+                animation in Project#1 - Investment-Watchlist.
+
+    Modification
+    ============
+    09/17/2022 Brian Zoulko    Created splash screen. 
+*/
+
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.bg-image {
+    /* Add blur effect */
+    filter: blur(10px);
+    -webkit-filter: blur(10px);
+    
+    /* Full height */
+    height: 100%; 
+    
+    /* Center and scale the image */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:auto;
+}
+
+/* Text area for names. */
+.bg-text {
+    background-color: black; 
+    color: white;
+    font-weight: bold;
+    border: 2px solid #f1f1f1;
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    transform: translate(-40%, -40%);
+    z-index: 2;
+    width: 90%;
+    padding: 25px;
+    text-align: center;
+}
