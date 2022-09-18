@@ -136,7 +136,8 @@ function appendFave (data) {
 
     // 09/16/2022 BZ - Added new button for a quick reload of that item.
     $(".load-news-item").on("click", async function() { 
-        var txtVal = $(this).parent().text().split("$");        
+        var txtVal = $(this).parent().text().split("$");   
+        console.log($(this).parent().siblings("h2").text());     
         var cryptoIdName = await searchTermToId(txtVal[0]);
         loadNewsFor(cryptoIdName[1]);
     });
@@ -207,7 +208,6 @@ async function fetchStock(stock) {
         var sym = response.data.symbol;
         var price = response.data.currentPrice;
         var priceChg = response.data.currentPrice - response.data.open;
-        console.log(priceChg);
         if (!priceChg) {
             priceChg = 0;
         }
@@ -268,6 +268,10 @@ async function fetchStock(stock) {
             }
 
             $(this).parent().remove();
+        });
+        $(".load-news-item").on("click", async function() { 
+            var txtVal = $(this).parent().text().split("$");   
+            loadStockNewsFor(txtVal[0]);
         });
         return true;
     }
@@ -386,3 +390,79 @@ async function loadNewsFor(searchCriteria) {
 
     newsDetail.append(newDivArea);
 }
+
+
+async function stockNews(searchFor){
+
+    // Define options for FETCH call.
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '3c1de3c74amsha8d8f057b36bd85p16c3bcjsnf67f38a740dd',
+            'X-RapidAPI-Host': 'google-news1.p.rapidapi.com'
+        }
+    };
+
+    // Create Crypto News Object for all results.
+    var bFoundNews = false;
+    var objStock = [{
+        source: "", 
+        title: "",
+        url: ""
+    }];
+    var rtnData = "";
+    
+    var stockID = searchFor
+    // F E T C H  News information using RapidAPI w/crypto-news.
+    await fetch(`https://google-news1.p.rapidapi.com/search?q=${stockID}&country=US&lang=en-US&when=30d&source=cnn.com&limit=50`, options)
+	.then(response => response.json())
+	.then(function(response){
+
+        // Initialize variables for pulling news detail.
+        var sFind = searchFor.toUpperCase();
+
+        // Remove the empty object created when initializing the object.
+        objStock.pop(objResult);
+
+        // Load news titles that contains matching text from
+        // the "searchFor" parameter.
+        for (let x = 0; x < response.articles.length; x++) {            
+                var objResult = {
+                    source: response.articles[x].source.title, 
+                    title: response.articles[x].title,
+                    url: response.articles[x].link
+                };
+
+                objStock.push(objResult);
+                bFoundNews = true;
+        }
+    }).catch(err => console.error(err));
+    return objStock;
+}
+
+async function loadStockNewsFor(searchCriteria) {
+    var objStock = await stockNews(searchCriteria);
+    var newsDetail = $(".right-box"); 
+    // Reset text every time.
+    var newDivArea = $('<div class="added-news-area">');
+    newsDetail.find('.added-news-area').remove();
+
+    // Add Crypto News to the HTML page.
+    if (!objStock) {
+        console.log("no news found");
+        return;
+    }
+
+    objStock.splice(10);
+
+    for (var i=0; i<objStock.length; i++) {
+        var newsDivItem = $(`<div class='news-items'>`);
+        var newsItems = $(`<a href="${objStock[i].url}"  target="_blank" class='added-news-items'>`);
+        newsItems.text(objStock[i].title);
+        newsDivItem.append(newsItems);
+        newDivArea.append(newsDivItem);
+    }
+
+    newsDetail.append(newDivArea);
+}
+
