@@ -24,7 +24,7 @@ async function startAnimation() {
         await pause(300);
     }
    
-    await pause(3000).then(() => window.open('index.html', '_self'));
+    await pause(3000).then(() => window.open('investment.html', '_self'));
     return;
 
 }
