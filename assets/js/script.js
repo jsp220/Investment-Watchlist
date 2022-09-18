@@ -208,7 +208,6 @@ async function fetchStock(stock) {
         var sym = response.data.symbol;
         var price = response.data.currentPrice;
         var priceChg = response.data.currentPrice - response.data.open;
-        console.log(priceChg);
         if (!priceChg) {
             priceChg = 0;
         }
@@ -272,9 +271,7 @@ async function fetchStock(stock) {
         });
         $(".load-news-item").on("click", async function() { 
             var txtVal = $(this).parent().text().split("$");   
-            console.log($(this).parent().siblings("h2").text());     
             loadStockNewsFor(txtVal[0]);
-            console.log(txtVal[0]);
         });
         return true;
     }
@@ -401,7 +398,7 @@ async function stockNews(searchFor){
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '0dadc101e6mshd15d9db12f4d181p1252fdjsn76c92d746167',
+            'X-RapidAPI-Key': '3c1de3c74amsha8d8f057b36bd85p16c3bcjsnf67f38a740dd',
             'X-RapidAPI-Host': 'google-news1.p.rapidapi.com'
         }
     };
@@ -416,14 +413,10 @@ async function stockNews(searchFor){
     var rtnData = "";
     
     var stockID = searchFor
-    console.log(stockID);
     // F E T C H  News information using RapidAPI w/crypto-news.
-    fetch(`https://google-news1.p.rapidapi.com/search?q=${stockID}&country=US&lang=en-US&when=30d&source=cnn.com&limit=50`, options)
+    await fetch(`https://google-news1.p.rapidapi.com/search?q=${stockID}&country=US&lang=en-US&when=30d&source=cnn.com&limit=50`, options)
 	.then(response => response.json())
 	.then(function(response){
-
-        console.log(response);
-        console.log(response.articles);
 
         // Initialize variables for pulling news detail.
         var sFind = searchFor.toUpperCase();
@@ -434,35 +427,21 @@ async function stockNews(searchFor){
         // Load news titles that contains matching text from
         // the "searchFor" parameter.
         for (let x = 0; x < response.articles.length; x++) {            
-            // if (response.articles[x].title.toUpperCase().search(sFind) > 0) {
                 var objResult = {
                     source: response.articles[x].source.title, 
                     title: response.articles[x].title,
                     url: response.articles[x].link
                 };
 
-                // // Display what was found to the console.
-                // console.log("Index: " + x);
-                // console.log("Source: " + objResult.source);
-                // console.log("Title: " + objResult.title);
-                // console.log("URL: " + objResult.url);
-                // console.log("");
-
                 objStock.push(objResult);
                 bFoundNews = true;
-            // }
         }
     }).catch(err => console.error(err));
-    console.log(objStock);
     return objStock;
 }
 
-// stockNews("appl")
-
 async function loadStockNewsFor(searchCriteria) {
-    console.log(searchCriteria);
     var objStock = await stockNews(searchCriteria);
-    console.log(objStock);
     var newsDetail = $(".right-box"); 
     // Reset text every time.
     var newDivArea = $('<div class="added-news-area">');
@@ -473,22 +452,13 @@ async function loadStockNewsFor(searchCriteria) {
         console.log("no news found");
         return;
     }
-    
-    // objStock.splice(10);
-    console.log(objStock);
-    console.log(objStock[0].title);
-    console.log(objStock[1]);
-    console.log(objStock[0]);
 
     objStock.splice(10);
 
-    
     for (var i=0; i<objStock.length; i++) {
-        // var newsDivItem = $(`<div class='added-news-items'>`);
         var newsDivItem = $(`<div class='news-items'>`);
         var newsItems = $(`<a href="${objStock[i].url}"  target="_blank" class='added-news-items'>`);
         newsItems.text(objStock[i].title);
-        console.log(objStock[i].title);
         newsDivItem.append(newsItems);
         newDivArea.append(newsDivItem);
     }
@@ -496,11 +466,3 @@ async function loadStockNewsFor(searchCriteria) {
     newsDetail.append(newDivArea);
 }
 
-// $(".load-news-item").on("click", async function() { 
-//     var txtVal = $(this).parent().text().split("$");  
-//     var crypto = $('#crypto').is(":checked")
-//     var stock = $('#stock').is(':checked')
-//     console.log($(this).parent().parent());      
-//     var cryptoIdName = await searchTermToId(txtVal[0]);
-//     loadNewsFor(cryptoIdName[1]);
-// });
