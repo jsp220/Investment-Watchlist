@@ -355,7 +355,8 @@ $("#add").on("click", async function(event) {
             }
         }
 
-        $(this).siblings("#search-term").val("");
+        var txtVal = $(this).siblings("#search-term").val();   
+        loadStockNewsFor(txtVal);
     }  
 });
 
@@ -398,7 +399,7 @@ async function stockNews(searchFor){
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '3c1de3c74amsha8d8f057b36bd85p16c3bcjsnf67f38a740dd',
+            'X-RapidAPI-Key': '953edfdddcmsh9b188ce66c7f4bcp172926jsncbfc2c951e56',
             'X-RapidAPI-Host': 'google-news1.p.rapidapi.com'
         }
     };
