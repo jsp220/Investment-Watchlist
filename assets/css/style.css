@@ -159,6 +159,9 @@ h2 {
   color: lightgray;
 }
 
+.dark-mode .red {
+  background-color: #CF6679 !important;
+}
 
 /* When using `max-width` as the breakpoint, you must go from widest to narrowest to avoid conflict */
 
