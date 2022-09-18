@@ -8,7 +8,7 @@
     ============
     09/17/2022 Brian Zoulko    Created splash screen.
 */
-var list = ["By","Ryan","Joon","Qi","and","Brian"];
+var list = ["By","Ryan Dao","Joon Park","Qi Chen","and","Brian Zoulko"];
 
 async function startAnimation() {
     
