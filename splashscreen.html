@@ -32,14 +32,12 @@
             /* Background Image */
             background-image: url("./images/CryptoStockRaiseFall.png");
             
-            /* Add blur effect */
-            filter: blur(8px);
-            -webkit-filter: blur(8px);
-            
-            /* Full height */
+            /* Blur background image */
+            filter: blur(6px);
+            -webkit-filter: blur(6px);
             height: 100%; 
             
-            /* Center and scale the image */
+            /* Background image placement. */
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -47,18 +45,17 @@
 
         /* Text area for names. */
         .bg-text {
-            background-color: rgb(0,0,0); /* Fallback color */
-            background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
+            background-color: rgba(0,0,0, 0.4);
             color: white;
             font-weight: bold;
             border: 3px solid #f1f1f1;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 40%;
+            left: 40%;
+            transform: translate(-40%, -40%);
             z-index: 2;
-            width: 80%;
-            padding: 20px;
+            width: 90%;
+            padding: 25px;
             text-align: center;
         }
     </style>
@@ -66,8 +63,8 @@
     <body>
         <div class="bg-image"></div>
         <div class="bg-text">
-        <h2>Investment Watchlist</h2>
-        <h1 class="list-it" style="font-size:50px"></h1>
+            <h1>Investment Watchlist</h1>
+            <h2 class="list-it"></h2>
         </div>
 
         <!-- JQuery -->
