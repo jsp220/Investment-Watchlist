@@ -16,6 +16,7 @@ function DarkMode() {
 
 var favCrypto;
 var favStock;
+var apiIndex = 0;
 
 function init() {
     // Retrieve favorite assets data from local storage  (init for crypto)
@@ -395,14 +396,29 @@ async function loadNewsFor(searchCriteria) {
 
 async function stockNews(searchFor){
 
+    var stockApi1 = ['953ed','fdddc','msh9b','188ce','66c7f','4bcp1','72926','jsncb','fc2c9','51e56'];
+    var stockApi2 = ['95007','c2cbd','mshdc','263a6','6001d','842p1','4fe60','jsn28','7c750','76a56'];
+    var stockApi3 = ['b6ec4','136fd','msh09','21262','6991f','f6cp1','6d7b6','jsne7','4cbf4','e92d5'];
+    var stockApi4 = ['3c1de','3c74a','msha8','d8f05','7b36b','d85p1','6c3bc','jsnf6','7f38a','740dd'];
+
+    var stockApi = [stockApi1.join(''), stockApi2.join(''),stockApi3.join(''), stockApi4.join('')]
+    
     // Define options for FETCH call.
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '953edfdddcmsh9b188ce66c7f4bcp172926jsncbfc2c951e56',
+            'X-RapidAPI-Key': stockApi[apiIndex],
             'X-RapidAPI-Host': 'google-news1.p.rapidapi.com'
         }
     };
+
+    console.log(stockApi[apiIndex]);
+
+    if (apiIndex == 3) {
+        apiIndex = 0;
+    } else {
+        apiIndex++;
+    }
 
     // Create Crypto News Object for all results.
     var bFoundNews = false;
