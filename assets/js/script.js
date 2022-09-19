@@ -252,7 +252,7 @@ async function fetchStock(stock) {
         $(".remove").on("click", function() {
             var remId = $(this).parent().attr("id");
             
-            console.log(remId)
+            // console.log(remId)
 
             for (i in favStock) {
                 if (remId === favStock[i]) {
@@ -412,7 +412,7 @@ async function stockNews(searchFor){
         }
     };
 
-    console.log(stockApi[apiIndex]);
+    // console.log(stockApi[apiIndex]);
 
     if (apiIndex == 3) {
         apiIndex = 0;
