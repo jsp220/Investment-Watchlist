@@ -86,6 +86,6 @@ async function getCryptoNews(searchFor) {
     }).catch(err => console.error(err));
 
     if (!bFoundNews) return;
-    console.log("#1 in api rtn: " + objCrypto.length);
+    // console.log("#1 in api rtn: " + objCrypto.length);
     return(objCrypto);
 }

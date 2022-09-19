@@ -138,7 +138,7 @@ function appendFave (data) {
     // 09/16/2022 BZ - Added new button for a quick reload of that item.
     $(".load-news-item").on("click", async function() { 
         var txtVal = $(this).parent().text().split("$");   
-        console.log($(this).parent().siblings("h2").text());     
+        // console.log($(this).parent().siblings("h2").text());     
         var cryptoIdName = await searchTermToId(txtVal[0]);
         loadNewsFor(cryptoIdName[1]);
     });
@@ -252,7 +252,7 @@ async function fetchStock(stock) {
         $(".remove").on("click", function() {
             var remId = $(this).parent().attr("id");
             
-            console.log(remId)
+            // console.log(remId)
 
             for (i in favStock) {
                 if (remId === favStock[i]) {
@@ -348,7 +348,6 @@ $("#add").on("click", async function(event) {
             var stockSuccess = await fetchStock(stockId);
             if (!stockSuccess) {
                 $(this).siblings("#search-term").val("");
-                console.log("a")
                 return;
             } else {
                 favStock.push(stockId);
@@ -412,7 +411,7 @@ async function stockNews(searchFor){
         }
     };
 
-    console.log(stockApi[apiIndex]);
+    // console.log(stockApi[apiIndex]);
 
     if (apiIndex == 3) {
         apiIndex = 0;
