@@ -22,7 +22,7 @@ WHEN I click on delete button
 THEN the item I clicked will be removed
 
 ## Screenshots
-![](./images/introduction.png)
+![](./images/introductionpage.png)
 ![](./images/investment.png)
 ![](./images/darkmode.png)
 
