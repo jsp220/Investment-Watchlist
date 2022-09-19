@@ -28,6 +28,6 @@ THEN the item I clicked will be removed
 
 ## Credit
 Crypto news / home screen - Brian Zoulko (bzoulko)<br>
-Crypto symbols / debugging - Joon Park (jsp220)<br>
+Crypto symbols / search function - Joon Park (jsp220)<br>
 Stock symbols / Stock news - Qi Chen (ricky8221)<br>
-Dark mode / debugging / design - Ryan Dao (ryedao)
+Dark mode / design - Ryan Dao (ryedao)
